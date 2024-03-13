@@ -1,0 +1,33 @@
+server:
+  port: 5000
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: COMMUNITY-SERVICE
+          uri: lb://COMMUNITY-SERVICE
+          predicates:
+            - Path=/api/v1/communities/**
+        - id: CITY-SERVICE
+          uri: lb://CITY-SERVICE
+          predicates:
+            - Path=/api/v1/cities/**
+        - id: PRODUCT-SERVICE
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/v1/products/**
+        - id: STOCK-SERVICE
+          uri: lb://STOCK-SERVICE
+          predicates:
+            - Path=/api/v1/stocks/**
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8787/eureka/
+  instance:
+    hostname: localhost
